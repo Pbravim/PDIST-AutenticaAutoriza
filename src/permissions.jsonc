@@ -1,0 +1,38 @@
+[
+    {
+        "method": "GET",
+        "path": "/v1/auth/me",
+        "description": "Obter permissões associadas a uma autenticação",
+        "profiles": [ "UserComum"]
+    },
+    {
+        "method": "POST",
+        "path": "/v1/auth/create",
+        "description": "Criar autenticação",
+        "profiles": ["UserComum"]
+    },
+    {
+        "method": "POST",
+        "path": "/v1/auth/login",
+        "description": "Autenticação de login",
+        "profiles": ["UserComum"]
+    },
+    {
+        "method": "POST",
+        "path": "/v1/auth/validate-password",
+        "description": "Validar senha",
+        "profiles": ["UserComum"]
+    },
+    {
+        "method": "PUT",
+        "path": "/v1/auth/me",
+        "description": "Atualizar autenticação atual",
+        "profiles": ["UserComum"]
+    },
+    {
+        "method": "PUT",
+        "path": "/v1/auth/update-password",
+        "description": "Atualizar senha",
+        "profiles": ["UserComum"]
+    }
+]

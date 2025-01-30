@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "sourceMap": true, // Necessário para gerar arquivos de mapa de origem
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": [
+              "src/**/*"
+, "config"            ],
+  "exclude": ["node_modules"]
+}
