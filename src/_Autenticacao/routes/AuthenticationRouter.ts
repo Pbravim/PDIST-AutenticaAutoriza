@@ -825,6 +825,10 @@ class AuthenticationRouter implements IAuthenticationRouter {
         app.put(`${basePath}/:id`, authenticate, authorize, validateParamId, validateBodyUpdateAuth, (req: IHttpAuthenticatedRequest, res: IHttpResponse, next: IHttpNext) => {
             this.authenticationController.updateAuthentication(req, res, next);
         });
+
+        app.put(`${basePath}/gateway/:id`, (req: IHttpAuthenticatedRequest, res: IHttpResponse, next: IHttpNext) => {
+            this.authenticationController.updateAuthentication(req, res, next);
+        });
     }
 
     

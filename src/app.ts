@@ -97,9 +97,9 @@ class App {
     private routes() {
         swaggerRouter(this.app.router);
         
-        AuthenticationRouter.registerRoutes("/v1/auth", this.app.router);    
-        ProfileRouter.registerRoutes("/v1/profile", this.app.router);
-        GrantsRouter.registerRoutes("/v1/grants", this.app.router);
+        AuthenticationRouter.registerRoutes("/auth", this.app.router);    
+        ProfileRouter.registerRoutes("/profile", this.app.router);
+        GrantsRouter.registerRoutes("/grants", this.app.router);
         
         this.app.use(this.app.router.getRouter())
     }

@@ -162,6 +162,7 @@ class AuthenticationController implements IAuthenticationController{
 
             res.status(201).json({ auth: authSemSenha });
         } catch (error: any) {
+            console.log(error)
             if (auth && auth.id) {
                 await this.authService.deleteAuthentication(auth.id)
             }
