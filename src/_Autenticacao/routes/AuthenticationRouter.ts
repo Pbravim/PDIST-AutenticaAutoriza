@@ -338,7 +338,7 @@ class AuthenticationRouter implements IAuthenticationRouter {
          *         500:
          *           description: Erro interno do servidor
          */
-        app.post(`${basePath}/register`, validateBodyStandardRegisterLogin, (req: IHttpRequest, res: IHttpResponse, next: IHttpNext) => {
+        app.post(`${basePath}/register`, (req: IHttpRequest, res: IHttpResponse, next: IHttpNext) => {
             this.authenticationController.createAuthentication(req, res, next);
         });
     

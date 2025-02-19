@@ -292,9 +292,10 @@ class AuthenticationController implements IAuthenticationController{
     async standartAuthenticate(req: IHttpRequest, res: IHttpResponse, next: IHttpNext): Promise<void> {
         try{
             const { login, password } = req.body;
+
             
             const auth = await this.authService.authenticate(login, password);
-
+            console.log(auth)
             if (!auth) {
                 throw new HttpError(404, 'Authentication not found');
             }

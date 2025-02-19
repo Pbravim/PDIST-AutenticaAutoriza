@@ -74,6 +74,8 @@ class App {
  *   cookie-session middleware for session management with specified options.
  */
     private middlewares() {
+        this.app.use(cors())
+
         this.app.use(bodyParser.json());
         useSession(this.app)
     }
