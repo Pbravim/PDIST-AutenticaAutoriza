@@ -380,7 +380,7 @@ class AuthenticationRouter implements IAuthenticationRouter {
          *         500:
          *           description: Erro interno do servidor
          */
-        app.post(`${basePath}/login`, validateBodyStandardRegisterLogin, (req: IHttpRequest, res: IHttpResponse, next: IHttpNext) => {
+        app.post(`${basePath}/login`, (req: IHttpRequest, res: IHttpResponse, next: IHttpNext) => {
             this.authenticationController.standartAuthenticate(req, res, next);
         });
     
@@ -825,10 +825,6 @@ class AuthenticationRouter implements IAuthenticationRouter {
         app.put(`${basePath}/:id`, authenticate, authorize, validateParamId, validateBodyUpdateAuth, (req: IHttpAuthenticatedRequest, res: IHttpResponse, next: IHttpNext) => {
             this.authenticationController.updateAuthentication(req, res, next);
         });
-
-        app.put(`${basePath}/gateway/:id`, (req: IHttpAuthenticatedRequest, res: IHttpResponse, next: IHttpNext) => {
-            this.authenticationController.updateAuthentication(req, res, next);
-        });
     }
 
     
@@ -861,6 +857,10 @@ class AuthenticationRouter implements IAuthenticationRouter {
          *           description: Erro interno do servidor
          */
         app.delete(`${basePath}/:id`, authenticate, authorize, validateParamId, (req: IHttpAuthenticatedRequest, res: IHttpResponse, next: IHttpNext) => {
+            this.authenticationController.deleteAuthentication(req, res, next);
+        });
+
+        app.delete(`${basePath}/gateway/:id`, (req: IHttpAuthenticatedRequest, res: IHttpResponse, next: IHttpNext) => {
             this.authenticationController.deleteAuthentication(req, res, next);
         });
     }

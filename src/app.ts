@@ -14,21 +14,6 @@ import jsonwebtoken from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
   
-// const whiteList = ['http://127.0.0.1:3000'];
-
-const whiteList = ['http://127.0.0.1:3000', 'http://localhost:3000'];
-
-const corsOptions: CorsOptions = {
-  origin: (requestOrigin: string | undefined, callback: (err: Error | null, allow: boolean) => void) => {
-    if (!requestOrigin || whiteList.includes(requestOrigin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'), false);
-    }
-  },
-  
-  credentials: true
-};
 
 function useSession(app: IApp) {
     if (process.env.AUTH_STRATEGY !== 'session') {
@@ -89,7 +74,6 @@ class App {
  *   cookie-session middleware for session management with specified options.
  */
     private middlewares() {
-        this.app.use(cors(corsOptions));
         this.app.use(bodyParser.json());
         useSession(this.app)
     }
