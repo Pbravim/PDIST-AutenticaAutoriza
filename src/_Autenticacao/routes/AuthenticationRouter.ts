@@ -657,8 +657,7 @@ class AuthenticationRouter implements IAuthenticationRouter {
          *           description: Erro interno do servidor
          */
         app.put(`${basePath}/update-password`, 
-            authenticate, 
-            validateBodyChangePassword, 
+            authenticate,  
             (req: IHttpAuthenticatedRequest, res: IHttpResponse, next: IHttpNext) => {
             this.authenticationController.updatePassword(req, res, next);
         });
@@ -702,7 +701,7 @@ class AuthenticationRouter implements IAuthenticationRouter {
          *         500:
          *           description: Erro interno do servidor
          */
-        app.put(`${basePath}/reset-password`, validateBodyPassword, (req: IHttpRequest, res: IHttpResponse, next: IHttpNext) => {
+        app.put(`${basePath}/reset-password`, (req: IHttpRequest, res: IHttpResponse, next: IHttpNext) => {
             this.authenticationController.updatePasswordReset(req, res, next);
         });
 

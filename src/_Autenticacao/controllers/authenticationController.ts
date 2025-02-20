@@ -251,18 +251,18 @@ class AuthenticationController implements IAuthenticationController{
      */
     async updatePasswordReset(req: IHttpRequest, res: IHttpResponse, next: IHttpNext): Promise<void> {
         try{
-            const { token } = req.query;
-            const { password } = req.body;
+            // const { token } = req.query;
+            const { login, password } = req.body;
 
-            const user = await this.authService.findByToken(token);
+            const user = await this.authService.findByLogin(login);
             
             if(!user){
                 throw new HttpError(404, 'Authentication not found');
             }
             
-            if (!await this.authService.isPasswordTokenValid(user.id, token)){;
-                throw new HttpError(403, 'Token is not valid');
-            }   
+            // if (!await this.authService.isPasswordTokenValid(user.id, token)){;
+            //     throw new HttpError(403, 'Token is not valid');
+            // }   
 
             await this.authService.updatePassword(user.id, password);
             res.status(204).json({})
