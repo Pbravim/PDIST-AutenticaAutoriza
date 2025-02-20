@@ -6,7 +6,7 @@ class SessionStrategy implements IAuthStrategy {
 
     async authenticate(req: IHttpRequest, auth: Partial<IAuthentication>): Promise<string> {
         req.session = { auth: auth };
-        return `Session started for user ${auth.id}`;
+        return `${auth.id}`;
     }
 
 
