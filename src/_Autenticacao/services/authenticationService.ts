@@ -1,13 +1,13 @@
 import {createAuthenticationRepository} from "../repositories/factoryAuthenticationRepository";
 import { IAuthentication, IAuthenticationRepository, IAuthenticationService, IExternalAuthenticationRepository } from "../Interfaces/authInterfaces";
 import bcrypt from "bcrypt";
-import { nanoid } from "nanoid";
 import HttpError from "../../utils/customErrors/httpError";
 import Authentication from "../models/authenticationModel";
 
 import dotenv from "dotenv";
 import { IProfile } from "../../_Autorização/Interfaces/profileInterfaces";
 import externalAuthenticationService from "./externalAuthenticationService";
+import { randomBytes } from "node:crypto";
 dotenv.config();
 
 class AuthenticationService implements IAuthenticationService {
@@ -129,7 +129,7 @@ class AuthenticationService implements IAuthenticationService {
      * @returns {Promise<void>}
      */
     async updatePassword(id: string, password: string): Promise<void> {
-        const salt = bcrypt.genSaltSync(10);
+        const salt = await bcrypt.genSaltSync(10);
         const passwordHash = await bcrypt.hash(password, salt);
         await this.authRepository.updateAuthentication(id, {passwordHash});
     }
@@ -199,7 +199,8 @@ class AuthenticationService implements IAuthenticationService {
      * @inheritdoc
      */
     async setPasswordTokenAndExpiryDate(id: string): Promise<string> {
-        const token = nanoid();
+        const token = randomBytes(16).toString("hex");
+        
 
         const expiryDate = new Date();
         expiryDate.setMinutes(expiryDate.getHours() + 1);

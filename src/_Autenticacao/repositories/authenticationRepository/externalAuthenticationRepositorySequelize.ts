@@ -3,31 +3,31 @@ import { IExternalAuthentication, IExternalAuthenticationRepository } from "../.
 
 class ExternalAuthenticationRepositorySequelize implements IExternalAuthenticationRepository {
     async findAll(): Promise<IExternalAuthentication[]> {
-        return await models.externalAuthenticationModelSequelize.findAll();
+        return await models.ExternalAuthenticationModelSequelize.findAll();
     }
 
     async findAllByProvider(provider: string): Promise<IExternalAuthentication[]> {
-        return await models.externalAuthenticationModelSequelize.findAll({where: {provider}});
+        return await models.ExternalAuthenticationModelSequelize.findAll({where: {provider}});
     }
 
     async findAllByAuthenticationId(authentication_id: string): Promise<IExternalAuthentication[]> {
-        return await models.externalAuthenticationModelSequelize.findAll(
+        return await models.ExternalAuthenticationModelSequelize.findAll(
             {where: {authentication_id},
             attributes: {exclude: ['authentication_id']}
         });
     }
 
     async findByExternalIdAndProvider(external_id: string, provider: string): Promise<IExternalAuthentication | null> {
-        return await models.externalAuthenticationModelSequelize.findOne({where: {external_id, provider}});
+        return await models.ExternalAuthenticationModelSequelize.findOne({where: {external_id, provider}});
     }
 
     async findByExternalId(external_id: string): Promise<IExternalAuthentication | null> {
-        return await models.externalAuthenticationModelSequelize.findOne({where: {external_id}});
+        return await models.ExternalAuthenticationModelSequelize.findOne({where: {external_id}});
     }
     
 
     async createExternalAuthentication(externalAuthentication: IExternalAuthentication): Promise<IExternalAuthentication> {
-        return await models.externalAuthenticationModelSequelize.create(externalAuthentication);
+        return await models.ExternalAuthenticationModelSequelize.create(externalAuthentication);
     }
 
     async updateExternalAuthentication(externalAuthentication: IExternalAuthentication, filteredData: Partial<IExternalAuthentication>): Promise<IExternalAuthentication> {       
@@ -35,7 +35,7 @@ class ExternalAuthenticationRepositorySequelize implements IExternalAuthenticati
             Object.entries(filteredData).filter(([_, value]) => value !== null)
         )
 
-        const [affectedCount, updatedRows] = await models.externalAuthenticationModelSequelize.update(
+        const [affectedCount, updatedRows] = await models.ExternalAuthenticationModelSequelize.update(
             { ...filteredUpdateData, updatedAt: new Date() },
             { where: { external_id: externalAuthentication.external_id }, returning: true }
         )
@@ -48,7 +48,7 @@ class ExternalAuthenticationRepositorySequelize implements IExternalAuthenticati
     }
 
     async deleteExternalAuthentication(externalAuthentication: IExternalAuthentication): Promise<void> {
-        await models.externalAuthenticationModelSequelize.destroy({where: {external_id: externalAuthentication.external_id}})
+        await models.ExternalAuthenticationModelSequelize.destroy({where: {external_id: externalAuthentication.external_id}})
     }
 }
 

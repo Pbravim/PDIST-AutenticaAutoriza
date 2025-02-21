@@ -147,7 +147,6 @@ class AuthenticationController implements IAuthenticationController{
                 login,
                 passwordHash: password,
             }
-
             auth = await this.authService.createStandartAuthentication(authData);
         
             if (!auth) {
@@ -253,7 +252,7 @@ class AuthenticationController implements IAuthenticationController{
         try{
             // const { token } = req.query;
             const { login, password } = req.body;
-
+            console.log(login, password)
             const user = await this.authService.findByLogin(login);
             
             if(!user){
@@ -267,6 +266,7 @@ class AuthenticationController implements IAuthenticationController{
             await this.authService.updatePassword(user.id, password);
             res.status(204).json({})
         } catch(error: any){
+            console.log(error)
             next(error)
         }
     }
