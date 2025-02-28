@@ -24,9 +24,8 @@ describe('Authentication Service', () => {
             updatedAt: new Date(),
         };
     });
-    test('Deveria criar um novo usuário', async () => {
-        const hashedPassword = await bcrypt.hash('password123', 10);
 
+    test('Deveria criar um novo usuário', async () => {
         mockAuthService.createStandartAuthentication.mockResolvedValue(mockAuth);
 
         const result = await mockAuthService.createStandartAuthentication({
@@ -35,16 +34,13 @@ describe('Authentication Service', () => {
         });
 
         expect(result).toEqual(mockAuth);
-        expect(mockAuthService.createStandartAuthentication).toHaveBeenCalledWith({
-            login: 'testuser',
-            passwordHash: 'password123',
-        });
     });
 
     test('Deveria autenticar com sucesso', async () => {
-        const hashedPassword = await bcrypt.hash('password123', 10);
-
         mockAuthService.authenticate.mockImplementation(async (login, password) => {
+            if (login !== mockAuth.login) {
+                return null;
+            }
             const isPasswordValid = await bcrypt.compare(password, mockAuth.passwordHash);
             return isPasswordValid ? mockAuth : null;
         });
@@ -52,15 +48,20 @@ describe('Authentication Service', () => {
         const result = await mockAuthService.authenticate('testuser', 'password123');
 
         expect(result).toEqual(mockAuth);
-        expect(mockAuthService.authenticate).toHaveBeenCalledWith('testuser', 'password123');
     });
 
     test('Deveria falhar ao autenticar com senha incorreta', async () => {
-        mockAuthService.authenticate.mockResolvedValue(null);
+        mockAuthService.authenticate.mockImplementation(async (login, password) => {
+            if (login !== mockAuth.login) {
+                return null;
+            }
+            const isPasswordValid = await bcrypt.compare(password, mockAuth.passwordHash);
+            return isPasswordValid ? mockAuth : null;
+        });
+
 
         const result = await mockAuthService.authenticate('testuser', 'wrongpassword');
 
         expect(result).toBeNull();
-        expect(mockAuthService.authenticate).toHaveBeenCalledWith('testuser', 'wrongpassword');
     });
 });

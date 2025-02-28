@@ -11,7 +11,7 @@ class GrantsRepositorySequelize implements IGrantsRepository{
      * @returns A promise that resolves to an array of all Grants in the database.
      */
     async findAll(): Promise<IGrants[]> {
-        return await models.grantsModelSequelize.findAll()
+        return await models.GrantsModelSequelize.findAll()
     }
 
 
@@ -21,7 +21,7 @@ class GrantsRepositorySequelize implements IGrantsRepository{
      * @returns A promise that resolves to an array of all Grants with the given ids.
      */
     async findByIds(ids: string[]): Promise<IGrants[]> {
-        return await models.grantsModelSequelize.findAll({where: {id: ids}})
+        return await models.GrantsModelSequelize.findAll({where: {id: ids}})
     }
 
 
@@ -31,7 +31,7 @@ class GrantsRepositorySequelize implements IGrantsRepository{
      * @returns A promise that resolves to the grant object if found, otherwise null.
      */
     async findById(id: string): Promise<IGrants | null> {
-        return await models.grantsModelSequelize.findOne({where: {id: id}})
+        return await models.GrantsModelSequelize.findOne({where: {id: id}})
     }
 
     /**
@@ -41,7 +41,7 @@ class GrantsRepositorySequelize implements IGrantsRepository{
      * @returns A promise that resolves to the grant object if found, otherwise null.
      */
     async findByMethodAndPath(method: string, path: string): Promise<IGrants | null> {
-        return await models.grantsModelSequelize.findOne({where: {method: method, path: path}})
+        return await models.GrantsModelSequelize.findOne({where: {method: method, path: path}})
     }
 
 
@@ -51,7 +51,7 @@ class GrantsRepositorySequelize implements IGrantsRepository{
      * @returns A promise that resolves to the created grant object, or null if creation fails.
      */
     async createGrants(grants: IGrants): Promise<IGrants | null> {
-        return await models.grantsModelSequelize.create(grants)
+        return await models.GrantsModelSequelize.create(grants)
     }
 
 
@@ -66,7 +66,7 @@ class GrantsRepositorySequelize implements IGrantsRepository{
             Object.entries(updateData).filter(([_, value]) => value !== null)
         )
 
-        const [affectedCount, updatedRows] = await models.grantsModelSequelize.update(
+        const [affectedCount, updatedRows] = await models.GrantsModelSequelize.update(
             { ...filteredUpdateData, updatedAt: new Date() },
             { where: { id }, returning: true }
         )
@@ -85,7 +85,7 @@ class GrantsRepositorySequelize implements IGrantsRepository{
      * @returns A promise that resolves when the grant is deleted.
      */
     async deleteGrants(id: string): Promise<void> {
-        await models.grantsModelSequelize.destroy({where: {id: id}});
+        await models.GrantsModelSequelize.destroy({where: {id: id}});
     }
 
     /**

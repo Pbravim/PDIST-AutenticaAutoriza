@@ -10,23 +10,23 @@ import { and, Op, QueryTypes } from "sequelize";
 
 class ProfileRepositorySequelize implements IProfileRepository {
     async findAll(): Promise<IProfile[]> {
-        return await models.profileModelSequelize.findAll();
+        return await models.ProfileModelSequelize.findAll();
     }
 
     async findById(id: string): Promise<IProfile | null> {
-        return await models.profileModelSequelize.findByPk(id);
+        return await models.ProfileModelSequelize.findByPk(id);
     }
 
     async findByIds(ids: string[]): Promise<IProfile[]> {
-        return await models.profileModelSequelize.findAll({ where: { id: ids } });
+        return await models.ProfileModelSequelize.findAll({ where: { id: ids } });
     }
 
     async findByName(name: string): Promise<IProfile | null> {
-        return await models.profileModelSequelize.findOne({ where: { name } });
+        return await models.ProfileModelSequelize.findOne({ where: { name } });
     }
 
     async createProfile(profile: IProfile): Promise<IProfile | null> {
-        return await models.profileModelSequelize.create(profile)
+        return await models.ProfileModelSequelize.create(profile)
     }
 
     async updateProfile(id: string, updateData: Partial<IProfileParams>): Promise<IProfile> {
@@ -34,7 +34,7 @@ class ProfileRepositorySequelize implements IProfileRepository {
             Object.entries(updateData).filter(([_, value]) => value !== null)
         )
         
-        const [affectedCount, updatedRows] = await models.profileModelSequelize.update(
+        const [affectedCount, updatedRows] = await models.ProfileModelSequelize.update(
             { ...FilteredUpdateData, updatedAt: new Date() },
             { where: { id }, returning: true }
         )
@@ -47,7 +47,7 @@ class ProfileRepositorySequelize implements IProfileRepository {
     }
 
     async deleteProfile(id: string): Promise<void> {
-        await models.profileModelSequelize.destroy({ where: { id } });
+        await models.ProfileModelSequelize.destroy({ where: { id } });
     }   
 
     async getAuthenticationsByProfileId(profile: ProfileModelSequelize): Promise<IAuthentication[]> {
@@ -86,12 +86,12 @@ class ProfileRepositorySequelize implements IProfileRepository {
     async getGrantsByProfiles(profiles: IProfile[]): Promise<IGrants[]> {
         const profileIds = profiles.map(profile => profile.id);
     
-        const profilesWithGrants = await models.profileModelSequelize.findAll({
+        const profilesWithGrants = await models.ProfileModelSequelize.findAll({
             where: {
                 id: profileIds
             },
             include: [{
-                model: models.grantsModelSequelize,
+                model: models.GrantsModelSequelize,
                 as: 'grants',
                 through: { attributes: [] } // Exclui atributos da tabela intermediária
             }]
